@@ -53,7 +53,7 @@ task copyFiles {
         copy {
             from "../mvn/com/boydti/fawe-nukkit/${project.parent.version}/"
             into '../mvn/com/boydti/fawe-nukkit/latest/'
-            include('*.jar')
+            include('fawe-nukkit*.jar')
             rename ("fawe-nukkit-${project.parent.version}.jar", 'fawe-nukkit-latest.jar')
         }
     }
