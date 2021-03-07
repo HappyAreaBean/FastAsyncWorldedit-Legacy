@@ -68,6 +68,8 @@ public class Settings extends Config {
     @Create
     public PATHS PATHS;
     @Create
+    public TAB_COMPLETION TAB_COMPLETION;
+    @Create
     public REGION_RESTRICTIONS_OPTIONS REGION_RESTRICTIONS_OPTIONS;
 
     @Comment("Paths for various directories")
@@ -163,6 +165,17 @@ public class Settings extends Config {
                 "List of blocks to strip nbt from",
         })
         public List<String> STRIP_NBT = new ArrayList<>();
+    }
+
+    public static class TAB_COMPLETION {
+        @Comment({"Entirely disabled tab completion to completely avoid exploits"})
+        public boolean ENABLED = true;
+        @Comment({"Max time tab-completes can attempt to operate for until being cancelled (ms)"})
+        public int MAX_TIME = 50;
+        @Comment({"When a tab-complete hits the max time, should a global cooldown be initiated?"})
+        public boolean GLOBAL_COOLDOWN = true;
+        @Comment({"Amount of time to wait before allowing tab completions again (ms)"})
+        public int COOLDOWN_LENGTH = 150;
     }
 
     public static class HISTORY {

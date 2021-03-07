@@ -25,6 +25,7 @@ import com.boydti.fawe.command.CFICommand;
 import com.boydti.fawe.command.MaskBinding;
 import com.boydti.fawe.command.PatternBinding;
 import com.boydti.fawe.config.BBC;
+import com.boydti.fawe.config.Settings;
 import com.boydti.fawe.object.FawePlayer;
 import com.boydti.fawe.object.exception.FaweException;
 import com.boydti.fawe.object.task.ThrowableSupplier;
@@ -69,6 +70,12 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +95,7 @@ public final class CommandManager {
     private static final Logger log = Logger.getLogger(CommandManager.class.getCanonicalName());
     private static final Logger commandLog = Logger.getLogger(CommandManager.class.getCanonicalName() + ".CommandLog");
     private static final Pattern numberFormatExceptionPattern = Pattern.compile("^For input string: \"(.*)\"$");
+    private static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     private final WorldEdit worldEdit;
     private final PlatformManager platformManager;
@@ -95,6 +103,7 @@ public final class CommandManager {
     private volatile Platform platform;
     private final DynamicStreamHandler dynamicHandler = new DynamicStreamHandler();
     private final ExceptionConverter exceptionConverter;
+    private boolean tabCompleteDisabled = false;
 
     private ParametricBuilder builder;
     private Map<Object, String[]> methodMap;
@@ -144,6 +153,7 @@ public final class CommandManager {
         } catch (ClassNotFoundException e) {}
     }
 
+    /**
     /**
      * Register all the methods in the class as commands<br>
      * - You should try to register commands during startup
@@ -544,12 +554,30 @@ public final class CommandManager {
 
     @Subscribe
     public void handleCommandSuggestion(CommandSuggestionEvent event) {
-        try {
+        if (!Settings.IMP.TAB_COMPLETION.ENABLED || tabCompleteDisabled) {
+            return;
+        }
+        //Do not let tab completions hang the main thread for more than 5 seconds.
+        Future<Object> future = executorService.submit(() -> {
             CommandLocals locals = new CommandLocals();
             locals.put(Actor.class, event.getActor());
-            event.setSuggestions(dispatcher.getSuggestions(event.getArguments(), locals));
-        } catch (CommandException e) {
-            event.getActor().printError(e.getMessage());
+            try {
+                event.setSuggestions(dispatcher.getSuggestions(event.getArguments(), locals));
+            } catch (CommandException e) {
+                event.getActor().printError(e.getMessage());
+            }
+            return null;
+        });
+        try {
+            future.get(Settings.IMP.TAB_COMPLETION.MAX_TIME, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException | ExecutionException e) {
+            event.getActor().printError(e.getCause().getMessage());
+        } catch (TimeoutException e) {
+            if (Settings.IMP.TAB_COMPLETION.GLOBAL_COOLDOWN) {
+                tabCompleteDisabled = true;
+                TaskManager.IMP.later(() -> tabCompleteDisabled = false, Settings.IMP.TAB_COMPLETION.COOLDOWN_LENGTH);
+            }
+            event.getActor().printError("Tab complete took too long.");
         }
     }
 
