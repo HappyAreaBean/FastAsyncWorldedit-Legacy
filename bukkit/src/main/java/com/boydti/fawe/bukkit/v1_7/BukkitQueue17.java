@@ -130,8 +130,7 @@ public class BukkitQueue17 extends BukkitQueue_0<net.minecraft.server.v1_7_R4.Ch
 
     @Override
     public boolean setMCA(final int mcaX, final int mcaZ, final RegionWrapper allowed, final Runnable whileLocked, boolean saveChunks, final boolean load) {
-        throw new UnsupportedOperationException();
-        /*TaskManager.IMP.sync(new RunnableVal<Boolean>() {
+        TaskManager.IMP.sync(new RunnableVal<Boolean>() {
             @Override
             public void run(Boolean value) {
                 long start = System.currentTimeMillis();
@@ -240,7 +239,7 @@ public class BukkitQueue17 extends BukkitQueue_0<net.minecraft.server.v1_7_R4.Ch
                 }
             }
         });
-        return true;*/
+        return true;
     }
 
     @Override
@@ -517,12 +516,13 @@ public class BukkitQueue17 extends BukkitQueue_0<net.minecraft.server.v1_7_R4.Ch
                         }
                     }
                     for (EntityPlayer player : players) {
+                        int currentVersion = player.playerConnection.networkManager.getVersion();
                         if (mask == 0 || mask == 65535 && hasEntities(nmsChunk)) {
-                            PacketPlayOutMapChunk packet = new PacketPlayOutMapChunk(nmsChunk, false, 65280);
+                            PacketPlayOutMapChunk packet = new PacketPlayOutMapChunk(nmsChunk, false, 65280, currentVersion);
                             player.playerConnection.sendPacket(packet);
                             mask = 255;
                         }
-                        PacketPlayOutMapChunk packet = new PacketPlayOutMapChunk(nmsChunk, false, mask);
+                        PacketPlayOutMapChunk packet = new PacketPlayOutMapChunk(nmsChunk, false, mask, currentVersion);
                         player.playerConnection.sendPacket(packet);
                     }
                     if (empty) {
