@@ -131,8 +131,7 @@ public class BukkitQueue18R3 extends BukkitQueue_0<net.minecraft.server.v1_8_R3.
 
     @Override
     public boolean setMCA(final int mcaX, final int mcaZ, final RegionWrapper allowed, final Runnable whileLocked, final boolean saveChunks, final boolean load) {
-        throw new UnsupportedOperationException();
-        /*TaskManager.IMP.sync(new RunnableVal<Boolean>() {
+        TaskManager.IMP.sync(new RunnableVal<Boolean>() {
             @Override
             public void run(Boolean value) {
                 long start = System.currentTimeMillis();
@@ -241,7 +240,7 @@ public class BukkitQueue18R3 extends BukkitQueue_0<net.minecraft.server.v1_8_R3.
                 }
             }
         });
-        return true;*/
+        return true;
     }
 
     @Override
