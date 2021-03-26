@@ -96,21 +96,21 @@ subprojects {
     repositories {
         maven {url "https://mvnrepository.com/artifact/"}
         mavenCentral()
-        maven {url "http://repo.dmulloy2.net/content/groups/public/"}
+        maven {url "https://repo.dmulloy2.net/content/groups/public/"}
         maven {url "https://repo.destroystokyo.com/repository/maven-public//"}
-        //maven {url "http://ci.emc.gs/nexus/content/groups/aikar/" }
+        //maven {url "https://ci.emc.gs/nexus/content/groups/aikar/" }
         maven {url "https://ci.athion.net/plugin/repository/tools/"}
         mavenLocal()
         maven {url "https://hub.spigotmc.org/nexus/content/groups/public/"}
         maven {url "https://maven.enginehub.org/repo/"}
         maven {url "https://repo.maven.apache.org/maven2"}
-        maven {url "http://ci.frostcast.net/plugin/repository/everything"}
-        maven {url "http://repo.spongepowered.org/maven"}
-        maven {url "http://dl.bintray.com/tastybento/maven-repo"}
+        maven {url "https://ci.frostcast.net/plugin/repository/everything"}
+        maven {url "https://repo.spongepowered.org/maven"}
+        maven {url "https://dl.bintray.com/tastybento/maven-repo"}
         maven {url "https://repo.inventivetalent.org/content/groups/public/"}
         maven {url "https://store.ttyh.ru/libraries/"}
         maven {url "https://repo.dmulloy2.net/nexus/repository/public/"}
-        maven {url "http://maven.elmakers.com/repository/"}
+        maven {url "https://maven.elmakers.com/repository/"}
         maven {url "https://ci.ender.zone/plugin/repository/everything/"}
         maven {url "https://plotsquared.com/mvn/"}
     }
@@ -119,7 +119,7 @@ task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all 
     destinationDir = file("./docs/javadoc")
     title = "$project.name $version API"
     options.author true
-    options.links 'http://docs.spring.io/spring/docs/4.3.x/javadoc-api/', 'http://docs.oracle.com/javase/8/docs/api/', 'http://docs.spring.io/spring-ws/docs/2.3.0.RELEASE/api/', 'http://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/'
+    options.links 'https://docs.spring.io/spring/docs/4.3.x/javadoc-api/', 'https://docs.oracle.com/javase/8/docs/api/', 'https://docs.spring.io/spring-ws/docs/2.3.0.RELEASE/api/', 'https://docs.spring.io/spring-security/site/docs/4.0.4.RELEASE/apidocs/'
     options.addStringOption('Xdoclint:none', '-quiet')
 
     delete "./docs"

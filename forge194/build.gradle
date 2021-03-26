@@ -3,7 +3,7 @@ buildscript {
         jcenter()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {url = "https://oss.sonatype.org/content/repositories/snapshots/"}
     }
@@ -28,7 +28,7 @@ targetCompatibility = 1.8
 repositories {
     maven {
         name = 'forge'
-        url = 'http://files.minecraftforge.net/maven'
+        url = 'https://files.minecraftforge.net/maven'
     }
     maven {
         name = "Sponge"
@@ -36,7 +36,7 @@ repositories {
     }
 //    maven {
 //        name = "Sponge Metrics"
-//        url = "http://repo.mcstats.org/content/repositories/releases/"
+//        url = "https://repo.mcstats.org/content/repositories/releases/"
 //    }
 }
 minecraft {

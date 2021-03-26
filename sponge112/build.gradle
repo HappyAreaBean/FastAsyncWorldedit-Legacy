@@ -2,10 +2,10 @@ buildscript {
     repositories {
         jcenter()
         maven { url = 'https://plugins.gradle.org/m2' }
-        maven {url = "https://oss.sonatype.org/content/repositories/snapshots/"}
-        maven {url = "http://repo.minecrell.net/snapshots"}
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "http://repo.minecrell.net/releases" }
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url = "https://repo.minecrell.net/snapshots" }
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://repo.minecrell.net/releases" }
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
@@ -27,19 +27,15 @@ targetCompatibility = 1.8
 clean { delete "../target" }
 
 repositories {
-    flatDir {dirs 'lib'}
+    flatDir { dirs 'lib' }
     maven {
         name = 'forge'
-        url = 'http://files.minecraftforge.net/maven'
+        url = 'https://files.minecraftforge.net/maven'
     }
     maven {
         name = "Sponge"
         url = "https://repo.spongepowered.org/maven"
     }
-//    maven {
-//        name = "Sponge Metrics"
-//        url = "http://repo.mcstats.org/content/repositories/releases/"
-//    }
 }
 
 dependencies {

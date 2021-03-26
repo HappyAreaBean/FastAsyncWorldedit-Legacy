@@ -3,16 +3,16 @@ buildscript {
         jcenter()
         maven {
             name = "forge"
-            url = "http://files.minecraftforge.net/maven"
+            url = "https://files.minecraftforge.net/maven"
         }
         maven {
             name = 'minecrell'
-            url = 'http://repo.minecrell.net/releases'
+            url = 'https://repo.minecrell.net/releases'
         }
         maven {url = "https://oss.sonatype.org/content/repositories/snapshots/"}
-        maven {url = "http://repo.minecrell.net/snapshots"}
-        maven { url = "http://files.minecraftforge.net/maven" }
-        maven { url = "http://repo.minecrell.net/releases" }
+        maven {url = "https://repo.minecrell.net/snapshots"}
+        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://repo.minecrell.net/releases" }
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
@@ -37,7 +37,7 @@ repositories {
     flatDir {dirs 'lib'}
     maven {
         name = 'forge'
-        url = 'http://files.minecraftforge.net/maven'
+        url = 'https://files.minecraftforge.net/maven'
     }
     maven {
         name = "Sponge"
@@ -45,7 +45,7 @@ repositories {
     }
 //    maven {
 //        name = "Sponge Metrics"
-//        url = "http://repo.mcstats.org/content/repositories/releases/"
+//        url = "https://repo.mcstats.org/content/repositories/releases/"
 //    }
 }
 
