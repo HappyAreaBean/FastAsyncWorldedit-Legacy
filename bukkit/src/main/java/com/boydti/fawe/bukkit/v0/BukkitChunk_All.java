@@ -24,6 +24,9 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
+
+import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
@@ -66,7 +69,12 @@ public class BukkitChunk_All extends CharFaweChunk<Chunk, BukkitQueue_All> {
 
     @Override
     public Chunk getNewChunk() {
-        return Bukkit.getWorld(getParent().getWorldName()).getChunkAt(getX(), getZ());
+        try {
+            return PaperLib.getChunkAtAsync(getParent().getWorld(), getX(), getZ(), true, true).get(); // Get chunks async
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private int layer = -1;

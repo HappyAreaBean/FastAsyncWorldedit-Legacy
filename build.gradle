@@ -3,6 +3,8 @@ buildscript {
         mavenCentral()
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
+        maven { url 'https://jitpack.io' }
+        maven { url = "https://repo.codemc.org/repository/maven-public" }
     }
 	dependencies {
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'

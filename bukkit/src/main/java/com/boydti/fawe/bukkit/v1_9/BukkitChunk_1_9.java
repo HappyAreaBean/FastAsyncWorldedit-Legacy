@@ -14,6 +14,9 @@ import com.sk89q.worldedit.internal.Constants;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
+
+import io.papermc.lib.PaperLib;
 import net.minecraft.server.v1_9_R2.*;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -101,7 +104,12 @@ public class BukkitChunk_1_9 extends CharFaweChunk<Chunk, BukkitQueue_1_9_R1> {
 
     @Override
     public Chunk getNewChunk() {
-        return ((BukkitQueue_1_9_R1) getParent()).getWorld().getChunkAt(getX(), getZ());
+        try {
+            return PaperLib.getChunkAtAsync(getParent().getWorld(), getX(), getZ(), true, true).get(); // Get chunks async
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public DataPaletteBlock newDataPaletteBlock() {

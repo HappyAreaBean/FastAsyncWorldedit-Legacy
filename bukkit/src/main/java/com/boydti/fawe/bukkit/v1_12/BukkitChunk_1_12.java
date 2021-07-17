@@ -12,6 +12,7 @@ import com.boydti.fawe.util.MathMan;
 import com.boydti.fawe.util.ReflectionUtils;
 import com.sk89q.jnbt.*;
 import com.sk89q.worldedit.internal.Constants;
+import io.papermc.lib.PaperLib;
 import net.minecraft.server.v1_12_R1.*;
 import org.bukkit.Chunk;
 import org.bukkit.World;
@@ -22,6 +23,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class BukkitChunk_1_12 extends CharFaweChunk<Chunk, BukkitQueue_1_12> {
 
@@ -135,7 +137,12 @@ public class BukkitChunk_1_12 extends CharFaweChunk<Chunk, BukkitQueue_1_12> {
 
     @Override
     public Chunk getNewChunk() {
-        return ((BukkitQueue_1_12) getParent()).getWorld().getChunkAt(getX(), getZ());
+        try {
+            return PaperLib.getChunkAtAsync(getParent().getWorld(), getX(), getZ(), true, true).get(); // Get chunks async
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public DataPaletteBlock newDataPaletteBlock() {
