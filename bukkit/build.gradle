@@ -28,6 +28,7 @@ dependencies {
     compile 'com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT'
     compile 'com.thevoxelbox.voxelsniper:voxelsniper:5.171.0'
     compile 'com.comphenix.protocol:ProtocolLib-API:4.4.0'
+    compile 'com.wasteofplastic:askyblock:3.0.8.2'
     compile('org.inventivetalent:mapmanager:1.7.2-SNAPSHOT') {
         transitive = false
     }
