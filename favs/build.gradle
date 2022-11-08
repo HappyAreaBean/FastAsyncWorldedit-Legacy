@@ -5,12 +5,8 @@ dependencies {
 clean { delete "../target" }
 
 processResources {
-    from('src/main/resources') {
-        include 'plugin.yml'
-        expand(
-                name: project.parent.name,
-                version: project.parent.version
-        )
+    filesMatching('plugin.yml') {
+        expand 'version': project.parent.version
     }
 }
 
