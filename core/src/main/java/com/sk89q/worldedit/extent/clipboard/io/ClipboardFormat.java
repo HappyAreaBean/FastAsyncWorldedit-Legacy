@@ -24,7 +24,13 @@ import com.boydti.fawe.config.Settings;
 import com.boydti.fawe.jnbt.NBTStreamer;
 import com.boydti.fawe.object.FaweOutputStream;
 import com.boydti.fawe.object.RunnableVal;
-import com.boydti.fawe.object.clipboard.*;
+import com.boydti.fawe.object.clipboard.AbstractClipboardFormat;
+import com.boydti.fawe.object.clipboard.DiskOptimizedClipboard;
+import com.boydti.fawe.object.clipboard.FaweClipboard;
+import com.boydti.fawe.object.clipboard.IClipboardFormat;
+import com.boydti.fawe.object.clipboard.LazyClipboardHolder;
+import com.boydti.fawe.object.clipboard.MultiClipboardHolder;
+import com.boydti.fawe.object.clipboard.URIClipboardHolder;
 import com.boydti.fawe.object.io.FastByteArrayOutputStream;
 import com.boydti.fawe.object.io.PGZIPOutputStream;
 import com.boydti.fawe.object.io.ResettableFileInputStream;
@@ -33,7 +39,6 @@ import com.boydti.fawe.object.schematic.PNGWriter;
 import com.boydti.fawe.object.schematic.Schematic;
 import com.boydti.fawe.object.schematic.StructureFormat;
 import com.boydti.fawe.util.MainUtil;
-import com.boydti.fawe.util.ReflectionUtils;
 import com.google.common.io.ByteSource;
 import com.google.common.io.Files;
 import com.google.gson.Gson;
@@ -45,28 +50,41 @@ import com.sk89q.worldedit.LocalSession;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.entity.Player;
-import com.sk89q.worldedit.event.extent.PlayerSaveClipboardEvent;
 import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldedit.extent.clipboard.BlockArrayClipboard;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
 import com.sk89q.worldedit.extent.clipboard.ClipboardFormats;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.registry.WorldData;
-import java.io.*;
+
+import javax.annotation.Nullable;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import javax.annotation.Nullable;
-
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -608,15 +626,6 @@ public enum ClipboardFormat {
         }
 
         return null;
-    }
-
-    public static ClipboardFormat addFormat(IClipboardFormat instance) {
-        ClipboardFormat newEnum = ReflectionUtils.addEnum(ClipboardFormat.class, instance.getName());
-        newEnum.format = instance;
-        for (String alias : newEnum.getAliases()) {
-            aliasMap.put(alias, newEnum);
-        }
-        return newEnum;
     }
 
     public static Class<?> inject() {

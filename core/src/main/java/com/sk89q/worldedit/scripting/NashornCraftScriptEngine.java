@@ -21,7 +21,7 @@ package com.sk89q.worldedit.scripting;
 
 import com.boydti.fawe.Fawe;
 import com.sk89q.worldedit.WorldEditException;
-import jdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;

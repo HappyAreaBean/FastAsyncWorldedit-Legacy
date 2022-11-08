@@ -4,6 +4,7 @@ import com.boydti.fawe.util.MathMan;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldedit.MutableBlockVector;
 import com.sk89q.worldedit.Vector;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -160,7 +161,7 @@ public class LocalBlockVectorSet implements Set<Vector> {
 
     @Override
     public Object[] toArray() {
-        return toArray(null);
+        return this.toArray((Object[]) null);
     }
 
     @Override

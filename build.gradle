@@ -88,10 +88,9 @@ subprojects {
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
     compileJava {
+        sourceCompatibility = JavaLanguageVersion.of(17)
+        targetCompatibility = JavaLanguageVersion.of(17)
         options.compilerArgs += ["-parameters"]
     }
 
@@ -115,6 +114,7 @@ subprojects {
         maven {url "https://maven.elmakers.com/repository/"}
         maven {url "https://ci.ender.zone/plugin/repository/everything/"}
         maven {url "https://repo.fantasyrealms.net/other-libraries"}
+        maven { url 'https://jitpack.io' }
     }
 }
 task aggregatedJavadocs(type: Javadoc, description: 'Generate javadocs from all child projects as if it was a single project', group: 'Documentation') {

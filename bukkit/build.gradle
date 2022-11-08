@@ -34,6 +34,10 @@ dependencies {
     implementation('org.inventivetalent:mapmanager:1.7.2-SNAPSHOT') {
         transitive = false
     }
+
+    // Only for shadowing
+    implementation 'com.github.Exlll.ConfigLib:configlib-yaml:v4.2.0'
+    implementation 'org.openjdk.nashorn:nashorn-core:15.4'
 }
 
 clean { delete "../target" }
@@ -90,10 +94,17 @@ shadowJar {
         include(dependency('co.aikar:fastutil-lite:1.0'))
         include(dependency(':core'))
         include(dependency('io.papermc:paperlib:1.0.6'))
+        include(dependency('com.github.Exlll.ConfigLib:configlib-yaml:v4.2.0'))
+        include(dependency('com.github.Exlll.ConfigLib:configlib-core:v4.2.0'))
+        include(dependency('org.snakeyaml:snakeyaml-engine:2.3'))
+        include(dependency('org.openjdk.nashorn:nashorn-core:15.4'))
     }
     archiveName = "${parent.name}-${project.name}-${parent.version}.jar"
     destinationDir = file '../target'
     relocate('com.google.gson', 'com.sk89q.worldedit.internal.gson')
+    relocate('de.exlll.configlib', "com.boydti.internal.configlib")
+    relocate('org.openjdk.nashorn', "com.boydti.internal.nashorn")
+    relocate('org.snakeyaml.engine', "com.boydti.internal.yaml")
 }
 shadowJar.doLast {
     task ->

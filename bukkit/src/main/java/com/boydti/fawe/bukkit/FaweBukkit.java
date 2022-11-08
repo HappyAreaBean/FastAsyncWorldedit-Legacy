@@ -7,7 +7,14 @@ import com.boydti.fawe.bukkit.listener.BrushListener;
 import com.boydti.fawe.bukkit.listener.BukkitImageListener;
 import com.boydti.fawe.bukkit.listener.CFIPacketListener;
 import com.boydti.fawe.bukkit.listener.RenderListener;
-import com.boydti.fawe.bukkit.regions.*;
+import com.boydti.fawe.bukkit.regions.ASkyBlockHook;
+import com.boydti.fawe.bukkit.regions.FactionsOneFeature;
+import com.boydti.fawe.bukkit.regions.FreeBuildRegion;
+import com.boydti.fawe.bukkit.regions.GriefPreventionFeature;
+import com.boydti.fawe.bukkit.regions.PlotMeFeature;
+import com.boydti.fawe.bukkit.regions.ResidenceFeature;
+import com.boydti.fawe.bukkit.regions.TownyFeature;
+import com.boydti.fawe.bukkit.regions.Worldguard;
 import com.boydti.fawe.bukkit.util.BukkitReflectionUtils;
 import com.boydti.fawe.bukkit.util.BukkitTaskMan;
 import com.boydti.fawe.bukkit.util.ItemUtil;
@@ -17,7 +24,6 @@ import com.boydti.fawe.bukkit.util.cui.StructureCUI;
 import com.boydti.fawe.bukkit.util.image.BukkitImageViewer;
 import com.boydti.fawe.bukkit.v0.BukkitQueue_0;
 import com.boydti.fawe.bukkit.v0.BukkitQueue_All;
-import com.boydti.fawe.bukkit.v0.ChunkListener_8;
 import com.boydti.fawe.bukkit.v0.ChunkListener_9;
 import com.boydti.fawe.bukkit.v1_10.BukkitQueue_1_10;
 import com.boydti.fawe.bukkit.v1_11.BukkitQueue_1_11;
@@ -32,7 +38,10 @@ import com.boydti.fawe.object.FaweCommand;
 import com.boydti.fawe.object.FawePlayer;
 import com.boydti.fawe.object.FaweQueue;
 import com.boydti.fawe.regions.FaweMaskManager;
-import com.boydti.fawe.util.*;
+import com.boydti.fawe.util.Jars;
+import com.boydti.fawe.util.MainUtil;
+import com.boydti.fawe.util.ReflectionUtils;
+import com.boydti.fawe.util.TaskManager;
 import com.boydti.fawe.util.cui.CUI;
 import com.boydti.fawe.util.image.ImageViewer;
 import com.boydti.fawe.util.metrics.BStats;
@@ -42,15 +51,6 @@ import com.sk89q.worldedit.bukkit.BukkitWorld;
 import com.sk89q.worldedit.bukkit.EditSessionBlockChangeDelegate;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.world.World;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -62,6 +62,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.primesoft.blockshub.BlocksHubBukkit;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public class FaweBukkit implements IFawe, Listener {
 
@@ -91,8 +101,8 @@ public class FaweBukkit implements IFawe, Listener {
     public FaweBukkit(BukkitMain plugin) {
         this.plugin = plugin;
         try {
-            Settings.IMP.TICK_LIMITER.ENABLED = !Bukkit.hasWhitelist();
             Fawe.set(this);
+            Settings.IMP.TICK_LIMITER.ENABLED = !Bukkit.hasWhitelist();
             setupInjector();
             try {
                 com.sk89q.worldedit.bukkit.BukkitPlayer.inject(); // Fixes
@@ -143,7 +153,11 @@ public class FaweBukkit implements IFawe, Listener {
                 // The tick limiter
                 try {
                     Class.forName("sun.misc.SharedSecrets");
-                    new ChunkListener_8();
+                    debug("THIS FAWE IS NOT FOR JAVA VERSION BELOW 17. PLEASE USE THE NORMAL BUILD INSTEAD.");
+                    debug("THIS FAWE IS NOT FOR JAVA VERSION BELOW 17. PLEASE USE THE NORMAL BUILD INSTEAD.");
+                    debug("THIS FAWE IS NOT FOR JAVA VERSION BELOW 17. PLEASE USE THE NORMAL BUILD INSTEAD.");
+                    debug("THIS FAWE IS NOT FOR JAVA VERSION BELOW 17. PLEASE USE THE NORMAL BUILD INSTEAD.");
+                    debug("THIS FAWE IS NOT FOR JAVA VERSION BELOW 17. PLEASE USE THE NORMAL BUILD INSTEAD.");
                 } catch (ClassNotFoundException e) {
                     new ChunkListener_9();
                 }

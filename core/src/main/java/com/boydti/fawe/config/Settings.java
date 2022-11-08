@@ -2,26 +2,35 @@ package com.boydti.fawe.config;
 
 import com.boydti.fawe.object.FaweLimit;
 import com.boydti.fawe.object.FawePlayer;
-import java.io.File;
-import java.util.*;
+import de.exlll.configlib.Comment;
+import de.exlll.configlib.Configuration;
+import de.exlll.configlib.Ignore;
+import de.exlll.configlib.YamlConfigurations;
 
-public class Settings extends Config {
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+@Configuration
+public class Settings {
     @Ignore
-    public static final Settings IMP = new Settings();
+    public static Settings IMP = null;
 
     @Comment("These first 6 aren't configurable") // This is a comment
-    @Final // Indicates that this value isn't configurable
+    @Ignore // Indicates that this value isn't configurable
     public final String ISSUES = "https://github.com/boy0001/FastAsyncWorldedit/issues";
-    @Final
     public final String WIKI = "https://github.com/boy0001/FastAsyncWorldedit/wiki/";
-    @Final
-    public String DATE; // These values are set from FAWE before loading
-    @Final
-    public String BUILD; // These values are set from FAWE before loading
-    @Final
-    public String COMMIT; // These values are set from FAWE before loading
-    @Final
-    public String PLATFORM; // These values are set from FAWE before loading
+
+    public String DATE = ""; // These values are set from FAWE before loading
+
+    public String BUILD = ""; // These values are set from FAWE before loading
+
+    public String COMMIT = ""; // These values are set from FAWE before loading
+
+    public String PLATFORM = ""; // These values are set from FAWE before loading
 
     @Comment({"Options: cn, de, es, fr, it, nl, ru, tr",
             "Create a PR to contribute a translation: https://github.com/boy0001/FastAsyncWorldedit/new/master/core/src/main/resources",})
@@ -49,30 +58,28 @@ public class Settings extends Config {
     })
     public int MAX_MEMORY_PERCENT = 95;
 
-    @Create
-    public CLIPBOARD CLIPBOARD;
-    @Create
-    public LIGHTING LIGHTING;
-    @Create
-    public TICK_LIMITER TICK_LIMITER;
-    @Create
-    public WEB WEB;
-    @Create
-    public EXTENT EXTENT;
-    @Create
-    public EXPERIMENTAL EXPERIMENTAL;
-    @Create
-    public QUEUE QUEUE;
-    @Create
-    public HISTORY HISTORY;
-    @Create
-    public PATHS PATHS;
-    @Create
-    public TAB_COMPLETION TAB_COMPLETION;
-    @Create
-    public REGION_RESTRICTIONS_OPTIONS REGION_RESTRICTIONS_OPTIONS;
-
+    public CLIPBOARD CLIPBOARD = new CLIPBOARD();
+    public LIGHTING LIGHTING = new LIGHTING();
+    @Comment("Generic tick limiter (not necessarily WorldEdit related, but useful to stop abuse)")
+    public TICK_LIMITER TICK_LIMITER = new TICK_LIMITER();
+    public WEB WEB = new WEB();
+    public EXTENT EXTENT = new EXTENT();
+    @Comment({
+            "Experimental options, use at your own risk",
+            " - UNSAFE = Can cause permanent damage to the server",
+            " - SAFE = Can be buggy but unlikely to cause any damage"
+    })
+    public EXPERIMENTAL EXPERIMENTAL = new EXPERIMENTAL();
+    @Comment("This relates to how FAWE places chunks")
+    public QUEUE QUEUE = new QUEUE();
+    public HISTORY HISTORY = new HISTORY();
     @Comment("Paths for various directories")
+    public PATHS PATHS = new PATHS();
+    public TAB_COMPLETION TAB_COMPLETION = new TAB_COMPLETION();
+    @Comment("Region restriction settings")
+    public REGION_RESTRICTIONS_OPTIONS REGION_RESTRICTIONS_OPTIONS = new REGION_RESTRICTIONS_OPTIONS();
+
+    @Configuration
     public static final class PATHS {
         public String TOKENS = "tokens";
         @Comment({
@@ -91,7 +98,7 @@ public class Settings extends Config {
         public String COMMANDS = "commands";
     }
 
-    @Comment("Region restriction settings")
+    @Configuration
     public static final class REGION_RESTRICTIONS_OPTIONS {
         @Comment({
                 "What type of users are allowed to WorldEdit in a region",
@@ -101,18 +108,16 @@ public class Settings extends Config {
         public String MODE = "MEMBER";
     }
 
-
-    @Create // This value will be generated automatically
-    public ConfigBlock<LIMITS> LIMITS;
-
     @Comment({
             "The \"default\" limit group affects those without a specific limit permission.",
             "To grant someone different limits, copy the default limits group",
             "and give it a different name (e.g. newbie). Then give the user the limit ",
             "permission node with that limit name (e.g. fawe.limit.newbie  )"
     })
-    @BlockName("default") // The name for the default block
-    public static class LIMITS extends ConfigBlock {
+    public Map<String, LIMITS> LIMITS = Collections.singletonMap("default", new LIMITS());
+
+    @Configuration
+    public static class LIMITS {
         @Comment("Max actions that can be run concurrently (i.e. commands)")
         public int MAX_ACTIONS = 1;
         @Comment("Max number of block changes (e.g. by `//set stone`).")
@@ -167,6 +172,7 @@ public class Settings extends Config {
         public List<String> STRIP_NBT = new ArrayList<>();
     }
 
+    @Configuration
     public static class TAB_COMPLETION {
         @Comment({"Entirely disabled tab completion to completely avoid exploits"})
         public boolean ENABLED = true;
@@ -178,6 +184,7 @@ public class Settings extends Config {
         public int COOLDOWN_LENGTH = 150;
     }
 
+    @Configuration
     public static class HISTORY {
         @Comment({
                 "Should history be saved on disk:",
@@ -262,15 +269,14 @@ public class Settings extends Config {
         public boolean SMALL_EDITS = false;
     }
 
-    @Comment("This relates to how FAWE places chunks")
+    @Configuration
     public static class QUEUE {
         @Comment({
                 "This should equal the number of processors you have",
                 " - Set this to 1 if you need reliable `/timings`"
         })
         public int PARALLEL_THREADS = Math.max(1, Runtime.getRuntime().availableProcessors());
-        @Create
-        public static PROGRESS PROGRESS;
+        public static PROGRESS PROGRESS = new PROGRESS();
         @Comment({
                 "When doing edits that effect more than this many chunks:",
                 " - FAWE will start placing before all calculations are finished",
@@ -311,6 +317,7 @@ public class Settings extends Config {
         })
         public int DISCARD_AFTER_MS = 60000;
 
+        @Configuration
         public static class PROGRESS {
             @Comment({"Display constant titles about the progress of a user's edit",
                     " - false = disabled",
@@ -325,11 +332,7 @@ public class Settings extends Config {
         }
     }
 
-    @Comment({
-            "Experimental options, use at your own risk",
-            " - UNSAFE = Can cause permanent damage to the server",
-            " - SAFE = Can be buggy but unlikely to cause any damage"
-    })
+    @Configuration
     public static class EXPERIMENTAL {
         @Comment({
                 "[UNSAFE] Directly modify the region files. (OBSOLETE - USE ANVIL COMMANDS)",
@@ -379,6 +382,7 @@ public class Settings extends Config {
         public boolean FREEBUILD = false;
     }
 
+    @Configuration
     public static class WEB {
         @Comment({
             "Should download urls be shortened?",
@@ -400,6 +404,7 @@ public class Settings extends Config {
         public String ASSETS = "https://empcraft.com/assetpack/";
     }
 
+    @Configuration
     public static class EXTENT {
         @Comment({
                 "Don't bug console when these plugins slow down WorldEdit operations",
@@ -410,7 +415,7 @@ public class Settings extends Config {
         public boolean DEBUG = true;
     }
 
-    @Comment("Generic tick limiter (not necessarily WorldEdit related, but useful to stop abuse)")
+    @Configuration
     public static class TICK_LIMITER {
         @Comment("Enable the limiter")
         public boolean ENABLED = true;
@@ -430,6 +435,7 @@ public class Settings extends Config {
         public boolean FIREWORKS_LOAD_CHUNKS = false;
     }
 
+    @Configuration
     public static class CLIPBOARD {
         @Comment({
                 "Store the clipboard on disk instead of memory",
@@ -449,6 +455,7 @@ public class Settings extends Config {
         public int DELETE_AFTER_DAYS = 1;
     }
 
+    @Configuration
     public static class LIGHTING {
         @Comment({
                 "If packet sending should be delayed until relight is finished",
@@ -467,8 +474,8 @@ public class Settings extends Config {
     }
 
     public void reload(File file) {
-        load(file);
-        save(file);
+        YamlConfigurations.save(file.toPath(), Settings.class, IMP);
+        YamlConfigurations.update(file.toPath(), Settings.class);
     }
 
     public FaweLimit getLimit(FawePlayer player) {
@@ -478,7 +485,7 @@ public class Settings extends Config {
         } else {
             limit = new FaweLimit();
         }
-        ArrayList<String> keys = new ArrayList<>(LIMITS.getSections());
+        ArrayList<String> keys = new ArrayList<>(LIMITS.keySet());
         if (keys.remove("default")) keys.add("default");
 
         boolean limitFound = false;
