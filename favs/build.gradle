@@ -1,5 +1,9 @@
 dependencies {
     implementation project(':bukkit')
+    implementation project(':core')
+    implementation 'com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT'
+    implementation 'com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT'
+    implementation 'com.thevoxelbox.voxelsniper:voxelsniper:5.171.0'
 }
 
 clean { delete "../target" }
