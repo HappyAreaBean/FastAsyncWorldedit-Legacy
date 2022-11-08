@@ -6,10 +6,10 @@ repositories {
 clean { delete "../target" }
 
 dependencies {
-    compile project(':core')
-//    compile 'cn.nukkit:nukkit:1.0-SNAPSHOT'
-    compile name: 'nukkit-1.0-SNAPSHOT'
-    compile name: 'worldedit-core-6.1.4-SNAPSHOT-dist'
+    implementation project(':core')
+//    implementation 'cn.nukkit:nukkit:1.0-SNAPSHOT'
+    implementation name: 'nukkit-1.0-SNAPSHOT'
+    implementation name: 'worldedit-core-6.1.4-SNAPSHOT-dist'
 }
 
 processResources {

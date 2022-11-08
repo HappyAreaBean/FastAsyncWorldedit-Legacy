@@ -18,9 +18,9 @@ apply plugin: 'com.github.johnrengelman.shadow'
 clean { delete "../target" }
 
 dependencies {
-    compile project(':core')
-    compile 'org.spongepowered:spongeapi:6.0.0-SNAPSHOT'
-    compile 'com.sk89q.worldedit:worldedit-forge-mc1.8.9:6.1.1'
+    implementation project(':core')
+    implementation 'org.spongepowered:spongeapi:6.0.0-SNAPSHOT'
+    implementation 'com.sk89q.worldedit:worldedit-forge-mc1.8.9:6.1.1'
 }
 
 sourceCompatibility = 1.8

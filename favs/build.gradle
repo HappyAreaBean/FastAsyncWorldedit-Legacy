@@ -1,5 +1,5 @@
 dependencies {
-    compile project(':bukkit')
+    implementation project(':bukkit')
 }
 
 clean { delete "../target" }

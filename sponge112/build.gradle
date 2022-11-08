@@ -39,11 +39,11 @@ repositories {
 }
 
 dependencies {
-    compile project(':core')
-    compile 'org.spongepowered:spongeapi:7.1.0-SNAPSHOT'
-    compile name: 'worldedit-sponge-6.1.9-SNAPSHOT-dist'
-    compile name: 'worldedit-core-6.1.9-SNAPSHOT-dist'
-    compile 'org.yaml:snakeyaml:1.18'
+    implementation project(':core')
+    implementation 'org.spongepowered:spongeapi:7.1.0-SNAPSHOT'
+    implementation name: 'worldedit-sponge-6.1.9-SNAPSHOT-dist'
+    implementation name: 'worldedit-core-6.1.9-SNAPSHOT-dist'
+    implementation 'org.yaml:snakeyaml:1.18'
 }
 
 minecraft {

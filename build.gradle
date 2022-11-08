@@ -2,12 +2,13 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
-        jcenter()
         maven { url 'https://jitpack.io' }
         maven { url = "https://repo.codemc.org/repository/maven-public" }
+
+        gradlePluginPortal()
     }
 	dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3'
+        classpath 'gradle.plugin.com.github.johnrengelman:shadow:7.1.2'
         classpath 'org.ajoberstar:grgit:1.7.0'
     }
     configurations.all {
@@ -84,7 +85,6 @@ description = """FastAsyncWorldEdit"""
 subprojects {
 
     apply plugin: 'java'
-    apply plugin: 'maven'
     apply plugin: 'eclipse'
     apply plugin: 'idea'
 

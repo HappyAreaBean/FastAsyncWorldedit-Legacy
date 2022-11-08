@@ -2,34 +2,34 @@ repositories {
     flatDir {dirs 'lib'}
 }
 dependencies {
-    compile project(':core')
-    compile 'com.sk89q:worldguard:6.0.0-SNAPSHOT'
-    compile('com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT') {
+    implementation project(':core')
+    implementation 'com.sk89q:worldguard:6.0.0-SNAPSHOT'
+    implementation('com.destroystokyo.paper:paper-api:1.12-R0.1-SNAPSHOT') {
         exclude group: 'net.md-5'
     }
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_12:1.12.1'
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_11:1.11'
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_10:1.10'
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_9:1.9.4'
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_8:1.8.8'
-    compile 'org.bukkit.craftbukkit:Craftbukkit_1_7:1.7.10'
-    compile "com.github.MilkBowl:VaultAPI:1.7"
-    compile 'io.papermc:paperlib:1.0.6'
-    compile 'com.massivecraft:factions:2.8.0'
-    compile 'com.factionsone:FactionsOne:1.2.2'
-    compile 'me.ryanhamshire:GriefPrevention:11.5.2'
-    compile 'com.massivecraft:mcore:7.0.1'
-    compile 'net.jzx7:regios:5.9.9'
-    compile 'com.bekvon.bukkit.residence:Residence:4.5._13.1'
-    compile 'com.palmergames.bukkit:towny:0.84.0.9'
-    compile 'com.worldcretornica:plotme_core:0.16.3'
-    compile 'junit:junit:4.11'
-    compile 'com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT'
-    compile 'com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT'
-    compile 'com.thevoxelbox.voxelsniper:voxelsniper:5.171.0'
-    compile 'com.comphenix.protocol:ProtocolLib-API:4.4.0'
-    compile 'com.wasteofplastic:askyblock:3.0.9.4'
-    compile('org.inventivetalent:mapmanager:1.7.2-SNAPSHOT') {
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_12:1.12.1'
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_11:1.11'
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_10:1.10'
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_9:1.9.4'
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_8:1.8.8'
+    implementation 'org.bukkit.craftbukkit:Craftbukkit_1_7:1.7.10'
+    implementation "com.github.MilkBowl:VaultAPI:1.7"
+    implementation 'io.papermc:paperlib:1.0.6'
+    implementation 'com.massivecraft.factions:Factions:3.3.0'
+    implementation 'com.factionsone:FactionsOne:1.2.2'
+    implementation 'me.ryanhamshire:GriefPrevention:11.5.2'
+    implementation 'com.massivecraft:mcore:7.0.1'
+    implementation 'net.jzx7:regios:5.9.9'
+    implementation 'com.bekvon.bukkit.residence:Residence:4.5._13.1'
+    implementation 'com.palmergames.bukkit:towny:0.84.0.9'
+    implementation 'com.worldcretornica:plotme_core:0.16.3'
+    implementation 'junit:junit:4.11'
+    implementation 'com.sk89q.worldedit:worldedit-bukkit:6.1.4-SNAPSHOT'
+    implementation 'com.sk89q.worldedit:worldedit-core:6.1.4-SNAPSHOT'
+    implementation 'com.thevoxelbox.voxelsniper:voxelsniper:5.171.0'
+    implementation 'com.comphenix.protocol:ProtocolLib-API:4.4.0'
+    implementation 'com.wasteofplastic:askyblock:3.0.9.4'
+    implementation('org.inventivetalent:mapmanager:1.7.2-SNAPSHOT') {
         transitive = false
     }
 }
@@ -84,6 +84,7 @@ task copyFiles {
 }
 
 apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
 // We only want the shadow jar produced
 shadowJar {
     dependencies {

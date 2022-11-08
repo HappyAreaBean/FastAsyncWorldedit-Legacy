@@ -18,9 +18,9 @@ apply plugin: 'com.github.johnrengelman.shadow'
 clean { delete "../target" }
 
 dependencies {
-    compile project(':core')
-    compile 'com.sk89q.worldedit:worldedit-forge-mc1.7.10:6.1.1-20151030.011615-19'
-    compile 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    implementation project(':core')
+    implementation 'com.sk89q.worldedit:worldedit-forge-mc1.7.10:6.1.1-20151030.011615-19'
+    implementation 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
 }
 
 sourceCompatibility = 1.8
